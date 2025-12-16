@@ -1,0 +1,83 @@
+package exercise04;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// 図書管理アプリ
+public class LibraryApp {
+
+	public static void main(String[] args) {
+		// Bookオブジェクトのリスト（図書館の蔵書管理）
+		ArrayList<Book> books = new ArrayList<Book>();
+
+		System.out.println("=== 図書管理アプリ（継承対応・ステップ拡張版）===");
+		System.out.println();
+
+		// サンプルデータ追加
+		Book book1 = new Book("英語の本", "田中太郎", "33333333");
+		Book book2 = new Book("Java入門", "井納和希", "11111111");
+
+		books.add(book1);
+		books.add(book2);
+
+		//		//英語の本を貸し出す
+		//		book1.lend();
+		//		System.out.println("英語の本を貸し出す");
+		//		book1.showMaterial();
+		//		System.out.println();
+
+		// 図書一覧表示
+		System.out.println("--- 図書一覧 ---");
+
+		for (Book book : books) {
+			book.showMaterial();
+		}
+
+		System.out.println();
+
+		// 貸出処理
+		System.out.print("貸出する書籍のISBNを入力してください: ");
+
+		Scanner sc = new Scanner(System.in);
+
+		String lendISBN = sc.next();
+
+		boolean foundLend = false;
+
+		for (Book book : books) {
+			if (lendISBN.equals(book.getIsbn())) {
+				book.setLent(true);
+				foundLend = true;
+				book.showMaterial();
+				System.out.println();
+				break;
+			}
+		}
+
+		if (!foundLend) {
+			System.out.println("該当図書が見つかりません。");
+		}
+		System.out.println();
+
+		// 返却処理
+		System.out.print("返却する書籍のISBNを入力してください: ");
+
+		String returnISBN = sc.next();
+
+		boolean foundReturn = false;
+
+		for (Book book : books) {
+			if (returnISBN.equals(book.getIsbn())) {
+				book.setLent(false);
+				foundReturn = true;
+				book.showMaterial();
+				System.out.println();
+				break;
+			}
+		}
+
+		if (!foundReturn) {
+			System.out.println("該当図書が見つかりません。");
+		}
+	}
+}
